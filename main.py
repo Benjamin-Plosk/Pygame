@@ -1,6 +1,6 @@
 import pygame
 import constants
-from entities import Entity
+from entities import Player
 from entities import Wall
 from entities import World
 
@@ -17,7 +17,7 @@ def main():
     world = World()
     sprite_group = pygame.sprite.Group()
     # # Create the player
-    player = Entity()
+    player = Player()
     # # Create Walls
     wall = Wall(500, 400, 100, 100)
     wall2 = Wall(100, 100, 50, 50)

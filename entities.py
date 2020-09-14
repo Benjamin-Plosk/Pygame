@@ -3,7 +3,7 @@ import constants
 from spritesheetfun import SpriteSheet
 
 
-class Entity(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
     # Constructor. Pass in the color of the block,
     # and its x and y position
     # def __init__(self, color, width, height):
