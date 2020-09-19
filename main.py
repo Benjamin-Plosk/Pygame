@@ -3,6 +3,7 @@ import constants
 from entities import Player
 from entities import Wall
 from entities import World
+from entities import Enemy
 
 
 def main():
@@ -18,6 +19,7 @@ def main():
     sprite_group = pygame.sprite.Group()
     # # Create the player
     player = Player()
+    enemy = Enemy()
     # # Create Walls
     wall = Wall(500, 400, 100, 100)
     wall2 = Wall(100, 100, 50, 50)
@@ -69,6 +71,10 @@ def main():
         screen.blit(world.image, world.rect)
         sprite_group.draw(screen)
         screen.blit(player.image, player.rect)
+        pygame.draw.rect(screen, constants.GREEN, (10, 10, 60, 10))
+
+        enemy.move_enemy(player.rect.x, player.rect.y)
+        screen.blit(enemy.image, enemy.rect)
         pygame.display.flip()
         # Limit to 60 frames per second
         clock.tick(60)

@@ -1,4 +1,7 @@
 import pygame
+import random
+import math
+
 import constants
 from spritesheetfun import SpriteSheet
 
@@ -13,12 +16,9 @@ class Player(pygame.sprite.Sprite):
 
         self.vel_x = 5
         self.vel_y = 5
-        # creates a surface and fills it with color
-        # self.image = pygame.Surface([width, height])
-        # self.image.fill(color)
-        # # get image rectangle (position and size)
-        # self.rect = self.image.get_rect()
-        self.walls = None
+
+        self.life = 100
+        # self.life_bar = pygame.Surface([constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]).convert()
 
         # This holds all the images for the animated walk left/right
         # of our player
@@ -26,14 +26,10 @@ class Player(pygame.sprite.Sprite):
         self.walking_frames_r = []
         self.walking_frames_u = []
         self.walking_frames_d = []
-        #
-        #         # What direction is the player facing?
-        #         self.direction = "R"
-        #         # self.direction_y = "D"
-        #
-        #         # List of sprites we can bump against
-        #         self.level = None
-        #
+
+        self.level = None
+        self.walls = None
+
         sprite_sheet = SpriteSheet("main_player.png")
         # Load all the right facing images into a list
         i = 0
@@ -118,6 +114,8 @@ class Player(pygame.sprite.Sprite):
             elif pressed_down:
                 self.rect.bottom = block.rect.top
 
+        # self.life_image = pygame.draw.rect(screen, constants.GREEN, (10, 10, 60, 10))
+
 
 class Wall(pygame.sprite.Sprite):
     """ Wall the player can run into. """
@@ -142,8 +140,7 @@ class World(pygame.sprite.Sprite):
     def __init__(self):
 
         super().__init__()
-        # self.large_image = pygame.image.load('Snipaste_2020-09-07_23-19-25.png').convert()
-        self.large_image = pygame.image.load('mapaunder.png').convert()
+        self.large_image = pygame.image.load('Snipaste_2020-09-07_23-19-25.png').convert()
         self.image = pygame.Surface([constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]).convert()
         self.rect = None
 
@@ -164,3 +161,56 @@ class Room(object):
         self.wall_list = pygame.sprite.Group()
         self.enemy_sprites = pygame.sprite.Group()
 
+
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        self.move_x = 1
+        self.move_y = 1
+
+        self.image = pygame.Surface([30, 30])
+        self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.rect.y = 0
+
+        # self.move_x = None
+        # self.move_y = None
+        # self.direction = random.randint(0, 1)
+        # self.image = pygame.Surface([50, 50])
+        # self.rect = self.image.get_rect()
+        #
+        # self.aux = 0
+
+    def move_enemy(self, player_x, player_y):
+
+        distance_x = player_x - self.rect.x
+        distance_y = player_y - self.rect.y
+        # hip = math.sqrt((distance_y ^ 2) + (distance_x ^ 2))
+        # cos = distance_x / hip
+        # sen = distance_y / hip
+
+        if distance_x > 0:
+            self.move_x = 2
+        elif distance_x < 0:
+            self.move_x = -2
+        if distance_y > 0:
+            self.move_y = 2
+        elif distance_y < 0:
+            self.move_y = -2
+
+        self.rect.x += self.move_x
+        self.rect.y += self.move_y
+    #
+    # def move_enemy(self):
+    #
+    #     if 0 < self.aux < 5:
+    #         self.move_x = random.randint(0, 10)
+    #         self.rect.x += self.move_x
+    #         self.aux -= 1
+    #     elif -5 < self.aux < 0:
+    #         self.move_y = random.randint(0, 10)
+    #         self.rect.y += self.move_y
+    #         self.aux += 1
+    #     else:
+    #         self.aux = random.randint(-5, 5)
