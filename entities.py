@@ -1,15 +1,12 @@
 import pygame
-import random
-import math
-
+# import random
+# import math
 import constants
 from spritesheetfun import SpriteSheet
 
 
 class Player(pygame.sprite.Sprite):
-    # Constructor. Pass in the color of the block,
-    # and its x and y position
-    # def __init__(self, color, width, height):
+
     def __init__(self):
 
         super().__init__()
@@ -29,6 +26,7 @@ class Player(pygame.sprite.Sprite):
 
         self.level = None
         self.walls = None
+        self.enemies = None
 
         sprite_sheet = SpriteSheet("main_player.png")
         # Load all the right facing images into a list
@@ -116,6 +114,9 @@ class Player(pygame.sprite.Sprite):
 
         # self.life_image = pygame.draw.rect(screen, constants.GREEN, (10, 10, 60, 10))
 
+        pygame.sprite.spritecollide(self, self.enemies, True)
+        # for block in block_hit_list:
+
 
 class Wall(pygame.sprite.Sprite):
     """ Wall the player can run into. """
@@ -171,8 +172,8 @@ class Enemy(pygame.sprite.Sprite):
 
         self.image = pygame.Surface([30, 30])
         self.rect = self.image.get_rect()
-        self.rect.x = 0
-        self.rect.y = 0
+        self.rect.x = 200
+        self.rect.y = 200
 
         # self.move_x = None
         # self.move_y = None

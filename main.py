@@ -17,6 +17,7 @@ def main():
     # # Create world
     world = World()
     sprite_group = pygame.sprite.Group()
+    sprite_group_2 = pygame.sprite.Group()
     # # Create the player
     player = Player()
     enemy = Enemy()
@@ -26,7 +27,9 @@ def main():
     # # Group
     sprite_group.add(wall)
     sprite_group.add(wall2)
+    sprite_group_2.add(enemy)
     player.walls = sprite_group
+    player.enemies = sprite_group_2
     # Loop until the user clicks the close button.
     done = False
     # # Get keys
@@ -74,7 +77,8 @@ def main():
         pygame.draw.rect(screen, constants.GREEN, (10, 10, 60, 10))
 
         enemy.move_enemy(player.rect.x, player.rect.y)
-        screen.blit(enemy.image, enemy.rect)
+        # screen.blit(enemy.image, enemy.rect)
+        sprite_group_2.draw(screen)
         pygame.display.flip()
         # Limit to 60 frames per second
         clock.tick(60)

@@ -29,3 +29,7 @@ class SpriteSheet(object):
 
         # Return the image
         return image
+
+    def get_wall_image(self, file_name):
+        self.sprite_sheet = pygame.image.load(file_name).convert()
+        pass
